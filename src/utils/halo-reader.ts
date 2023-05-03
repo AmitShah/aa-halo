@@ -11,11 +11,12 @@ export default async function readKeys(){
     alert(JSON.stringify(keys));
     const address = keys[0].address
 
+    alert("sign with address:"+address);
     const signature = await ethSignMessage('test123', 1, address)
     console.log('signature:', signature)
 
     const signerAddress = ethers.recoverAddress(hashMessage("test123"),signature);
-
+    alert("recovered:"+signerAddress);
     alert("done");
 }
 
