@@ -1,17 +1,22 @@
 import { listKeys, ethSignMessage } from 'halo-chip'
-import { Provider, Signer, TransactionRequest, TypedDataDomain, TypedDataField, VoidSigner } from 'ethers'
+import { ethers, Provider, Signer, TransactionRequest, TypedDataDomain, TypedDataField, VoidSigner } from 'ethers'
 import { Deferrable, defineReadOnly, resolveProperties, shallowCopy } from "@ethersproject/properties";
 import { Bytes, BytesLike } from "@ethersproject/bytes";
+import { hashMessage } from '@ethersproject/hash'
 
 export default async function readKeys(){
     const keys = await listKeys()
     alert('keys:')
     keys.map((k:any) => console.log)
     alert(JSON.stringify(keys));
-    // const address = keys[0].address
+    const address = keys[0].address
 
-    // const signature = await ethSignMessage('test123', 1, address)
-    // console.log('signature:', signature)
+    const signature = await ethSignMessage('test123', 1, address)
+    console.log('signature:', signature)
+
+    const signerAddress = ethers.recoverAddress(hashMessage("test123"),signature);
+
+    alert("done");
 }
 
 export class HaloSigner extends VoidSigner implements Signer {
