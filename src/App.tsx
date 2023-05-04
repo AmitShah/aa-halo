@@ -26,9 +26,16 @@ function App() {
     setLoading(false)
   }
 
-  const createWallet = async () => {
-   
-
+  const createWallet = async () => {    
+    try{
+      const signer = await getZeroDevSigner({
+        projectId: process.env.REACT_APP_ZERODEV_PROJECT_ID as string,
+        owner:  new ethers.Wallet(process.env.REACT_APP_PK as string, new ethers.providers.JsonRpcProvider(process.env.REACT_APP_GOERLI_URL))
+      })    
+      setAddress(await signer.getAddress())
+    }catch(e){
+      console.error(e);
+    }    
   }
 
   return (
@@ -37,17 +44,17 @@ function App() {
       {(() => {
               if (address === ''){
                   return (
-                    <button type="button" onClick={initializeHaloHandler}>Initialize Halo</button>
+                    <button type="button" onClick={initializeHaloHandler}>Initialize Wallet</button>
 
                   )
               }              
-              return
-              {address && 
+              
+            })()}
+        {address && 
                 <div>
                   <label>Wallet: {address}</label>
                 </div>
               }
-            })()}
       </header>
     </div>
   );
