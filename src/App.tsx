@@ -10,6 +10,7 @@ import { ethers } from 'ethers';
 function App() {
   const [haloSigner, setHaloSigner] = useState<ZeroDevSigner|null>(null);
   const [address, setAddress] = useState('')
+  const [ownerAddress, setOwnerAddress] = useState('')
   const [loading, setLoading] = useState(false)
   
   const initializeHaloHandler = async ()=>{
@@ -23,6 +24,7 @@ function App() {
     })
 
     setAddress(await signer.getAddress())
+    setOwnerAddress(await signer.originalSigner.getAddress())
     setLoading(false)
   }
 
@@ -54,6 +56,13 @@ function App() {
                 <div>
                   <label>Wallet: {address}</label>
                 </div>
+                
+              }
+         {ownerAddress && 
+                <div>
+                  <label>Owner: {ownerAddress}</label>
+                </div>
+                
               }
       </header>
     </div>
