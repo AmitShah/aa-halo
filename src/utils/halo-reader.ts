@@ -45,14 +45,18 @@ export class HaloSigner extends VoidSigner implements Signer {
     }
 
     signMessage(message: Bytes | string): Promise<string> {
+        debugger
+        console.log("signing message");
         return ethSignMessage(message,1,this.address);
     }
 
     signTransaction(transaction: Deferrable<TransactionRequest>): Promise<string> {
+        debugger;
         return this._fail("HaloSigner cannot sign transactions", "signTransaction");
     }
 
     _signTypedData(domain: TypedDataDomain, types: Record<string, Array<TypedDataField>>, value: Record<string, any>): Promise<string> {
+        debugger;
         return this._fail("HaloSigner cannot sign typed data", "signTypedData");
     }
 
