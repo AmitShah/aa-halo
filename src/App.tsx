@@ -30,6 +30,7 @@ function App() {
 
     setAddress(await signer.getAddress())
     setOwnerAddress(await signer.originalSigner.getAddress())
+    setHaloSigner(signer);
     setLoading(false)
   }
 
@@ -47,7 +48,6 @@ function App() {
   }
 
   const mint = async()=>{
-    debugger
     const nftContract = new Contract(contractAddress, contractABI, haloSigner as ZeroDevSigner);
     const tx = await nftContract.mint(address)
     const receipt  = await tx.wait()    
@@ -67,9 +67,14 @@ function App() {
               }              
               
             })()}
-       
+        {(() => {
+              if (haloSigner !== null){
+                  return (
                     <button type="button" onClick={mint}>Mint On Polygon</button>
-          
+                  )
+              }              
+              
+            })()}
         {address && 
                 <div>
                   <label>Wallet: {address}</label>
