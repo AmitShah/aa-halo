@@ -3,7 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import readKeys, { HaloSigner } from './utils/halo-reader';
 import { getPrivateKeyOwner, getZeroDevSigner, ZeroDevSigner } from '@zerodevapp/sdk'
-import { Signer } from 'ethers';
+import { ethers } from 'ethers';
+
 
 
 function App() {
@@ -14,11 +15,13 @@ function App() {
   const initializeHaloHandler = async ()=>{
     setLoading(true)
     const keys = await HaloSigner.readKeys();
-    const haloSigner = new HaloSigner(keys[0]);
+    console.log(keys);
+    const haloSigner = new HaloSigner(keys[0], new ethers.providers.JsonRpcProvider(process.env.REACT_APP_GOERLI_URL));
     const signer = await getZeroDevSigner({
-      projectId: process.env.ZERODEV_PROJECT_ID as string,
+      projectId: process.env.REACT_APP_ZERODEV_PROJECT_ID as string,
       owner:  haloSigner
     })
+
     setAddress(await signer.getAddress())
     setLoading(false)
   }
@@ -32,7 +35,7 @@ function App() {
     <div className="App">
       <header className="App-header">
       {(() => {
-              if (haloSigner == null){
+              if (address === ''){
                   return (
                     <button type="button" onClick={initializeHaloHandler}>Initialize Halo</button>
 

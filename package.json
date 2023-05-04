@@ -16,7 +16,7 @@
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.1",
     "@zerodevapp/sdk": "^3.0.15",
-    "ethers": "^6.3.0",
+    "ethers": "^5.7.2",
     "halo-chip": "^0.2.0",
     "net": "^1.0.2",
     "react": "^18.2.0",
