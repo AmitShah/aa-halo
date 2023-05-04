@@ -17,7 +17,7 @@ function App() {
     const haloSigner = new HaloSigner(keys[0]);
     const signer = await getZeroDevSigner({
       projectId: process.env.ZERODEV_PROJECT_ID as string,
-      owner:  getPrivateKeyOwner(`468f0c80d5336c4a45be71fa19b77e9320dc0abaea4fd018e0c49aca90c1db78`),
+      owner:  haloSigner
     })
     setAddress(await signer.getAddress())
     setLoading(false)
