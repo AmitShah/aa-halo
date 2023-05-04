@@ -5,6 +5,7 @@ import { Bytes, BytesLike } from "@ethersproject/bytes";
 import { hashMessage } from '@ethersproject/hash'
 import { Provider, TransactionRequest, TransactionResponse } from '@ethersproject/abstract-provider';
 import { Signer, VoidSigner ,TypedDataDomain, TypedDataField} from '@ethersproject/abstract-signer';
+import { ethers } from 'ethers';
 
 export default async function readKeys(){
     // const keys = await listKeys()
@@ -28,7 +29,7 @@ export class HaloSigner extends VoidSigner implements Signer {
         super(address, provider);    
     }
 
-    static async readKeys():Promise<string[]>{
+    static async readKeys():Promise<any[]>{
         const keys =await listKeys()
         return keys;
     }
@@ -44,10 +45,11 @@ export class HaloSigner extends VoidSigner implements Signer {
     }
 
     signMessage(message: Bytes | string): Promise<string> {
-        return this._fail("VoidSigner cannot sign messages", "signMessage");
+        return ethSignMessage(message,1,this.address);
     }
 
     signTransaction(transaction: Deferrable<TransactionRequest>): Promise<string> {
+        
         return this._fail("VoidSigner cannot sign transactions", "signTransaction");
     }
 

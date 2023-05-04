@@ -16,7 +16,7 @@ function App() {
     setLoading(true)
     const keys = await HaloSigner.readKeys();
     console.log(keys);
-    const haloSigner = new HaloSigner(keys[0], new ethers.providers.JsonRpcProvider(process.env.REACT_APP_GOERLI_URL));
+    const haloSigner = new HaloSigner(keys[0].address, new ethers.providers.JsonRpcProvider(process.env.REACT_APP_GOERLI_URL));
     const signer = await getZeroDevSigner({
       projectId: process.env.REACT_APP_ZERODEV_PROJECT_ID as string,
       owner:  haloSigner
